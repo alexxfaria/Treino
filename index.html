@@ -338,6 +338,16 @@
                     checkbox.closest('.exercise-item').classList.remove('completed');
                 }
             });
+
+            // NOVO: Tenta compartilhar usando a Web Share API
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Resumo do Treino - Allp Fit',
+                    text: resumo
+                }).catch(() => {
+                    // Se o usuário cancelar ou erro, não faz nada extra
+                });
+            }
         }
     </script>
 </body>
