@@ -1,161 +1,391 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Minha Ficha de Treino - Allp Fit</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css" />
-</head>
 <body>
   <div class="container">
-    <h1>Minha Ficha de Treino - Allp Fit</h1>
+    <h1>Minha Ficha de Treino</h1>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     <p class="sub-info">**Fase de Adaptação - 4 Semanas**</p>
     <p class="sub-detail">Objetivo: Recondicionamento Muscular, Fortalecimento Geral, Adaptação Articular</p>
 
     <div class="info-box">
-      **Instruções:** Marque os exercícios que você realizou, insira o peso utilizado e clique em "Gerar Resumo do Treino" para criar um texto compartilhável.
+      <strong>Instruções:</strong> Marque os exercícios que você realizou, insira a carga utilizada e clique em
+      <strong>"Gerar Resumo do Treino"</strong> para criar um texto compartilhável.
     </div>
 
-    <!-- Exemplo: Treino Dia 1 -->
-    <div class="section" id="dia1">
-      <h2>DIA 1: PEITO E OMBRO</h2>
-      <div class="exercise-list">
-        <div class="exercise-item">
-          <input type="checkbox" id="d1e1" />
-          <label for="d1e1" class="exercise-label">
-            <img src="gifs/supino-reto.gif" class="exercise-gif" alt="Supino Máquina">
-            Supino Reto
-          </label>
-          <span class="exercise-details">15/12/10</span>
-          <input type="text" class="weight-input" placeholder="Peso (kg)" />
-        </div>
-        <div class="exercise-item">
-          <input type="checkbox" id="d1e2" />
-          <label for="d1e1" class="exercise-label">
-            <img src="gifs/supino-inclinado.gif" class="exercise-gif" alt="Supino Máquina">
-            Supino Inclinado
-          </label>
-          <span class="exercise-details">15/12/10</span>
-          <input type="text" class="weight-input" placeholder="Peso (kg)" />
-        </div>
-        <div class="exercise-item">
-          <input type="checkbox" id="d1e3" />
-          <label for="d1e1" class="exercise-label">
-            <img src="gifs/peck-deck.gif" class="exercise-gif" alt="Supino Máquina">
-            Peck deck 
-          </label>
-          <span class="exercise-details">3 x 12-15</span>
-          <input type="text" class="weight-input" placeholder="Peso (kg)" />
-        </div>
-        <div class="exercise-item">
-          <input type="checkbox" id="d1e4" />
-          <label for="d1e1" class="exercise-label">
-            <img src="gifs/desenvolvimento-arnold.gif" class="exercise-gif" alt="Supino Máquina">
-            Desenvolvimento p/ frente arnold
-          </label>
-          <span class="exercise-details">3 x 8</span>
-          <input type="text" class="weight-input" placeholder="Peso (kg)" />
-        </div>
-        <div class="exercise-item">
-          <input type="checkbox" id="d1e5" />
-          <label for="d1e1" class="exercise-label">
-            <img src="gifs/elevacao-lateral.gif" class="exercise-gif" alt="Supino Máquina">
-            Elevação lateral
-          </label>
-          <span class="exercise-details">3 x 8</span>
-          <input type="text" class="weight-input" placeholder="Peso (kg)" />
-        </div>
-        <div class="exercise-item">
-          <input type="checkbox" id="d1e6" />
-          <label for="d1e1" class="exercise-label">
-            <img src="gifs/elevacao-frontal.gif" class="exercise-gif" alt="Supino Máquina">
-            Elevação frontal
-          </label>
-          <span class="exercise-details">3 x 8</span>
-          <input type="text" class="weight-input" placeholder="Peso (kg)" />
-        </div>
-        <!-- Adicione outros exercícios aqui -->
+    <div id="grupos-treino-container">
+      <!-- Grupos e exercícios vão ser adicionados aqui dinamicamente -->
+    </div>
+
+    <div class="add-controls">
+      <div class="row">
+        <input type="text" id="input-nome-grupo" placeholder="Nome do Grupo (ex: Dia 2: Costas e Bíceps)" />
+        <button onclick="adicionarGrupo()">Adicionar Grupo</button>
+      </div>
+
+      <div class="row">
+        <select id="select-grupos"></select>
+        <input type="text" id="input-nome-exercicio" placeholder="Nome do Exercício" />
+        <input type="text" id="input-repeticoes" placeholder="Repetições (ex: 3x12)" />
+        <button type="button" onclick="document.getElementById('input-gif-file').click()">GIF</button>
+        <input type="file" id="input-gif-file" accept="image/gif" style="display:none" />
+        <button onclick="adicionarExercicio()">Adicionar Exercício</button>
       </div>
     </div>
 
-    <button class="generate-button" onclick="gerarResumoTreino()">Gerar Resumo do Treino</button>
+
+    <div style="margin-top: 20px;">
+      <button class="generate-button" onclick="gerarResumoTreino()">Gerar Resumo do Treino</button>
+      <button class="secondary-button" onclick="salvarComoArquivo()">Salvar Treino em arquivo</button>
+      <input type="file" id="arquivoInput" style="display:none" onchange="importarTreino()" />
+      <button class="secondary-button" onclick="document.getElementById('arquivoInput').click()">Importar Treino de
+        arquivo</button>
+    </div>
+
+
     <pre id="output-text"></pre>
   </div>
 
+
+
   <script>
-  function getFormattedDate() {
+    let gifBase64Temp = ''; // variável global temporária para armazenar o base64 do gif
+
+    document.getElementById('input-gif-file').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        gifBase64Temp = e.target.result; // base64 completo com prefixo data:image/gif;base64,...
+        alert('GIF carregado com sucesso!');
+      }
+      reader.readAsDataURL(file);
+    });
+
+    // Inicializa o treino com o que estiver salvo no localStorage ou vazio
+    let treino = JSON.parse(localStorage.getItem('meuTreino')) || [];
+
+    // Função para gerar IDs únicos para elementos
+    function generateId() {
+      return 'id-' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // Salva o treino no localStorage
+    function salvarTreinoLocal() {
+      localStorage.setItem('meuTreino', JSON.stringify(treino));
+    }
+
+    // Remove um exercício do grupo pelo id do exercício
+    function removerExercicio(grupoId, exercicioId) {
+      const grupo = treino.find(g => g.id === grupoId);
+      if (!grupo) return;
+      grupo.exercicios = grupo.exercicios.filter(ex => ex.id !== exercicioId);
+      salvarTreinoLocal();
+      renderizarTreino();
+    }
+
+    // Remove um grupo pelo id
+    function removerGrupo(grupoId) {
+      if (!confirm("Tem certeza que deseja apagar o grupo e todos os seus exercícios?")) return;
+      treino = treino.filter(g => g.id !== grupoId);
+      salvarTreinoLocal();
+      renderizarTreino();
+    }
+
+    // Renderiza todo o treino na tela
+    function renderizarTreino() {
+      const container = document.getElementById('grupos-treino-container');
+      container.innerHTML = '';
+
+      treino.forEach(grupo => {
+        const grupoDiv = document.createElement('div');
+        grupoDiv.className = 'section';
+        grupoDiv.id = grupo.id;
+
+        const tituloWrapper = document.createElement('div');
+        tituloWrapper.style.display = 'flex';
+        tituloWrapper.style.alignItems = 'center';
+        tituloWrapper.style.justifyContent = 'space-between';
+
+        const titulo = document.createElement('h2');
+        titulo.contentEditable = true;
+        titulo.innerText = grupo.nome;
+        titulo.title = "Clique para editar nome do grupo";
+        titulo.style.flexGrow = '1';
+        titulo.style.marginRight = '10px';
+        titulo.oninput = () => {
+          grupo.nome = titulo.innerText.trim();
+          atualizarSelectGrupos();
+          salvarTreinoLocal();
+        }
+
+        const botaoApagarGrupo = document.createElement('button');
+        botaoApagarGrupo.title = "Apagar grupo";
+        botaoApagarGrupo.style.cursor = 'pointer';
+        botaoApagarGrupo.style.background = 'transparent';
+        botaoApagarGrupo.style.border = 'none';
+        botaoApagarGrupo.style.color = 'red';
+        botaoApagarGrupo.style.fontSize = '20px';
+        botaoApagarGrupo.style.fontWeight = 'bold';
+        botaoApagarGrupo.innerHTML = '×';
+        botaoApagarGrupo.onclick = () => removerGrupo(grupo.id);
+
+        tituloWrapper.appendChild(titulo);
+        tituloWrapper.appendChild(botaoApagarGrupo);
+        grupoDiv.appendChild(tituloWrapper);
+
+        const lista = document.createElement('div');
+        lista.className = 'exercise-list';
+
+        grupo.exercicios.forEach(ex => {
+          const item = document.createElement('div');
+          item.className = 'exercise-item';
+          item.style.display = 'flex';
+          item.style.alignItems = 'center';
+          item.style.justifyContent = 'space-between';
+
+          const leftDiv = document.createElement('div');
+          leftDiv.style.display = 'flex';
+          leftDiv.style.alignItems = 'center';
+          leftDiv.style.flexGrow = '1';
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.id = ex.id;
+          checkbox.checked = ex.marcado;
+          checkbox.onchange = () => {
+            ex.marcado = checkbox.checked;
+            salvarTreinoLocal();
+          }
+
+          const label = document.createElement('label');
+          label.htmlFor = ex.id;
+          label.className = 'exercise-label';
+          label.innerText = ex.nome;
+          label.style.marginLeft = '8px';
+
+          const detalhes = document.createElement('span');
+          detalhes.className = 'exercise-details';
+          detalhes.innerText = ex.repeticoes;
+          detalhes.style.marginLeft = '10px';
+
+          leftDiv.appendChild(checkbox);
+          // Adiciona a imagem GIF base64, se existir
+          if (ex.gifBase64) {
+            const img = document.createElement('img');
+            img.src = ex.gifBase64;
+            img.alt = 'GIF do exercício';
+            img.style.width = '60px';
+            img.style.height = '60px';
+            img.style.objectFit = 'contain';
+            img.style.marginLeft = '10px';
+            img.style.borderRadius = '6px';
+            leftDiv.appendChild(img);
+          }
+          leftDiv.appendChild(label);
+
+          
+
+          leftDiv.appendChild(detalhes);
+
+          const cargaInput = document.createElement('input');
+          cargaInput.type = 'number';
+          cargaInput.min = 0;
+          cargaInput.step = 1;
+          cargaInput.className = 'carga-input';
+          cargaInput.placeholder = 'Carga (kg)';
+          cargaInput.value = ex.carga !== undefined ? ex.carga : '';
+          cargaInput.style.marginLeft = '10px';
+          cargaInput.oninput = () => {
+            const val = cargaInput.value.trim();
+            ex.carga = val === '' ? '' : parseInt(val, 10);
+            salvarTreinoLocal();
+          };
+
+          const botaoApagarExercicio = document.createElement('button');
+          botaoApagarExercicio.title = "Apagar exercício";
+          botaoApagarExercicio.style.cursor = 'pointer';
+          botaoApagarExercicio.style.background = 'transparent';
+          botaoApagarExercicio.style.border = 'none';
+          botaoApagarExercicio.style.color = 'red';
+          botaoApagarExercicio.style.fontSize = '18px';
+          botaoApagarExercicio.style.fontWeight = 'bold';
+          botaoApagarExercicio.style.marginLeft = '10px';
+          botaoApagarExercicio.innerHTML = '×';
+          botaoApagarExercicio.onclick = () => removerExercicio(grupo.id, ex.id);
+
+          item.appendChild(leftDiv);
+          item.appendChild(cargaInput);
+          item.appendChild(botaoApagarExercicio);
+          lista.appendChild(item);
+        });
+
+        grupoDiv.appendChild(lista);
+        container.appendChild(grupoDiv);
+      });
+
+      atualizarSelectGrupos();
+    }
+
+
+    // Atualiza o <select> dos grupos para adicionar exercícios
+    function atualizarSelectGrupos() {
+      const select = document.getElementById('select-grupos');
+      select.innerHTML = '';
+      treino.forEach(grupo => {
+        const option = document.createElement('option');
+        option.value = grupo.id;
+        option.innerText = grupo.nome;
+        select.appendChild(option);
+      });
+    }
+
+    // Adiciona um novo grupo
+    function adicionarGrupo() {
+      const nomeGrupo = document.getElementById('input-nome-grupo').value.trim();
+      if (!nomeGrupo) {
+        alert('Por favor, insira o nome do grupo.');
+        return;
+      }
+      treino.push({ id: generateId(), nome: nomeGrupo, exercicios: [] });
+      document.getElementById('input-nome-grupo').value = '';
+      renderizarTreino();
+      salvarTreinoLocal();
+    }
+
+    // Adiciona um exercício ao grupo selecionado
+    function adicionarExercicio() {
+      const select = document.getElementById('select-grupos');
+      const nomeExercicio = document.getElementById('input-nome-exercicio').value.trim();
+      const repeticoes = document.getElementById('input-repeticoes').value.trim();
+
+      if (!nomeExercicio) {
+        alert('Por favor, insira o nome do exercício.');
+        return;
+      }
+      if (!repeticoes) {
+        alert('Por favor, insira as repetições.');
+        return;
+      }
+
+      const grupoSelecionado = treino.find(g => g.id === select.value);
+      if (!grupoSelecionado) {
+        alert('Grupo não encontrado.');
+        return;
+      }
+
+      grupoSelecionado.exercicios.push({
+        id: generateId(),
+        nome: nomeExercicio,
+        repeticoes: repeticoes,
+        carga: '',
+        marcado: false,
+        gifBase64: gifBase64Temp || '' // usa o gif carregado ou vazio
+      });
+
+      // limpa os inputs e a variável temporária
+      document.getElementById('input-nome-exercicio').value = '';
+      document.getElementById('input-repeticoes').value = '';
+      gifBase64Temp = '';
+      document.getElementById('input-gif-file').value = '';
+
+      renderizarTreino();
+      salvarTreinoLocal();
+    }
+
+
+    // Função para gerar resumo do treino (igual ao seu original, adaptado para nova estrutura)
+    function getFormattedDate() {
       const today = new Date();
       return today.toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
-  }
+    }
 
-  function gerarResumoTreino() {
+    function gerarResumoTreino() {
       const outputTextElement = document.getElementById('output-text');
-      let resumo = `📊 Resumo do Treino de Hoje - Allp Fit 🏋️‍♂️\n`;
+      let resumo = `📊 Resumo do Treino de Hoje 🏋️‍♂️\n`;
       resumo += `Data: ${getFormattedDate()}\n\n✅ Exercícios Realizados:\n`;
 
-      const checkedExercises = document.querySelectorAll('.exercise-item input[type="checkbox"]:checked');
-      if (checkedExercises.length === 0) {
-      outputTextElement.textContent = "Ops! Nenhum exercício marcado.";
-      outputTextElement.style.display = 'block';
-      return;
-      }
+      let encontrou = false;
 
-      checkedExercises.forEach(checkbox => {
-      const item = checkbox.closest('.exercise-item');
-      const labelText = item.querySelector('.exercise-label')?.innerText.trim();
-      const details = item.querySelector('.exercise-details')?.textContent.trim();
-      const weightInput = item.querySelector('.weight-input');
-      const peso = weightInput?.value.trim() || 'Peso não informado';
-      const sectionTitle = item.closest('.section')?.querySelector('h2')?.textContent;
+      treino.forEach(grupo => {
+        let grupoTexto = `\n   • ${grupo.nome}\n`;
+        let temExercicioMarcado = false;
 
-      if (!resumo.includes(`\n   • ${sectionTitle}\n`)) {
-          resumo += `\n   • ${sectionTitle}\n`;
-      }
+        grupo.exercicios.forEach(ex => {
+          if (ex.marcado) {
+            temExercicioMarcado = true;
+            encontrou = true;
+            resumo += `     - ${ex.nome} (${ex.repeticoes}) | Carga: ${ex.carga || 'Carga não informada'}\n`;
+          }
+        });
 
-      resumo += `     - ${labelText} (${details}) | Peso: ${peso}\n`;
-
-      item.classList.add('completed');
+        if (!temExercicioMarcado) {
+          // remove grupo se não tem exercicio marcado do texto
+          resumo = resumo.replace(grupoTexto, '');
+        }
       });
 
-      resumo += `\n💪 Treino concluído com sucesso! #VoltaAoTreino #AllpFit #FocoNoTreino`;
+      if (!encontrou) {
+        outputTextElement.textContent = "Ops! Nenhum exercício marcado.";
+        outputTextElement.style.display = 'block';
+        return;
+      }
+
+      resumo += `\n💪 Treino concluído com sucesso! #VoltaAoTreino #FocoNoTreino`;
 
       outputTextElement.textContent = resumo;
       outputTextElement.style.display = 'block';
 
       if (navigator.share) {
-      navigator.share({
-          title: 'Resumo do Treino - Allp Fit',
+        navigator.share({
+          title: 'Resumo do Treino',
           text: resumo
-      }).catch(() => {});
+        }).catch(() => { });
       }
-  }
+    }
 
-  // Salva automaticamente os pesos no localStorage ao digitar
-  document.addEventListener('input', function (e) {
-      if (e.target.classList.contains('weight-input')) {
-      const exerciseId = e.target.closest('.exercise-item').querySelector('input[type="checkbox"]').id;
-      localStorage.setItem(`peso-${exerciseId}`, e.target.value);
-      }
-  });
+    // Salvar treino completo em JSON (com grupos e exercícios)
+    function salvarComoArquivo() {
+      const dados = treino;
+      const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "meu_treino_completo.json";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
 
-  // Restaura os pesos salvos do localStorage ao carregar a página
-  window.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.exercise-item').forEach(item => {
-      const checkbox = item.querySelector('input[type="checkbox"]');
-      const inputPeso = item.querySelector('.weight-input');
-      const pesoSalvo = localStorage.getItem(`peso-${checkbox.id}`);
-      if (pesoSalvo) {
-          inputPeso.value = pesoSalvo;
-      }
-      });
-  });
+    // Importar treino JSON (com grupos e exercícios)
+    function importarTreino() {
+      const fileInput = document.getElementById("arquivoInput");
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          treino = JSON.parse(e.target.result);
+          renderizarTreino();
+          salvarTreinoLocal();
+          alert("Treino importado com sucesso!");
+        } catch {
+          alert("Arquivo inválido!");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Inicializa a interface ao carregar a página
+    window.onload = () => {
+      renderizarTreino();
+    };
   </script>
 
 </body>
-</html>

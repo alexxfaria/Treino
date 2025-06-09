@@ -1,146 +1,298 @@
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f0f2f5;
-  color: #333;
-  margin: 0;
-  padding: 20px;
-  line-height: 1.6;
-}
-
-.container {
-  max-width: 900px;
-  margin: 20px auto;
-  background-color: #fff;
-  padding: 30px;
+/* Grupos de treino (seções) */
+.section {
+  background: #ffffff;
+  padding: 20px 24px;
+  margin-bottom: 25px;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1.5px solid #dbe4ea;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  position: relative;
+  transition: background-color 0.3s ease;
 }
 
-h1, h2 {
-  color: #007bff;
-  text-align: center;
-  margin-bottom: 20px;
+/* Título do grupo */
+.section h2 {
+  font-weight: 700;
+  font-size: 1.4em;
+  color: #2c3e50;
+  margin-bottom: 18px;
+  cursor: text;
+  user-select: text;
+  padding-bottom: 5px;
+  border-bottom: 2px solid transparent;
 }
 
-h1 {
-  font-size: 2.5em;
+.section h2:focus {
+  outline: none;
+  border-bottom: 2px solid #3498db;
 }
 
-h2 {
-  font-size: 1.8em;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
-  margin-top: 30px;
-}
-
-.sub-info {
-  text-align: center;
-  font-size: 1.1em;
-  color: #555;
-}
-
-.sub-detail {
-  text-align: center;
-  font-size: 0.9em;
-  color: #777;
-}
-
-.info-box {
-  background-color: #fff3cd;
-  border-left: 5px solid #ffeeba;
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 5px;
-  color: #856404;
-  font-size: 0.9em;
-}
-
+/* Exercício container */
 .exercise-list {
-  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
+/* Cada exercício */
 .exercise-item {
+  background: #f9f9f9;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
   display: flex;
-  align-items: center;
-  background-color: #e9f5ff;
-  border: 1px solid #cce0ff;
-  padding: 12px 15px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-}
-
-.exercise-item input[type="checkbox"] {
-  margin-right: 10px;
-  accent-color: #007bff;
-  width: 20px;
-  height: 20px;
-}
-
-.exercise-label {
-  display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
-  flex-grow: 1;
-  font-size: 1.1em;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  transition: background 0.3s ease;
 }
 
-.exercise-gif {
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  object-fit: cover;
+/* Checkbox do exercício */
+.exercise-item input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
 }
 
+/* Nome do exercício */
+.exercise-label {
+  flex: 1;
+  font-weight: 600;
+  font-size: 1em;
+  color: #34495e;
+  user-select: none;
+}
+
+/* Repetições */
 .exercise-details {
   font-size: 0.9em;
-  color: #666;
-  margin-left: auto;
-  margin-right: 10px;
+  color: #7f8c8d;
+  min-width: 90px;
+  user-select: none;
 }
 
+/* Input peso */
 .weight-input {
   width: 80px;
-  padding: 4px 6px;
   font-size: 0.9em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  transition: border-color 0.3s ease;
 }
 
-.exercise-item.completed {
-  background-color: #d4edda;
-  border-color: #c3e6cb;
+.weight-input:focus {
+  outline: none;
+  border-color: #3498db;
 }
 
-.exercise-item.completed .exercise-label {
-  text-decoration: line-through;
-  color: #555;
-}
-
-.generate-button {
-  background-color: #28a745;
-  color: white;
-  padding: 15px 30px;
+/* Botão X para remover (grupo ou exercício) */
+.remove-button {
+  background: transparent;
   border: none;
-  border-radius: 8px;
+  color: #e74c3c;
   font-size: 1.2em;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 30px auto;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.remove-button:hover {
+  color: #c0392b;
+}
+
+/* Controles para adicionar grupos e exercícios */
+.add-controls {
+  background: #f5f9fc;
+  border: 1px solid #b0c4de;
+  padding: 20px 24px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Estilo das linhas de grupo e exercício */
+.add-controls .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Estilo dos inputs e selects */
+.add-controls input[type="text"],
+.add-controls select {
+  padding: 10px 14px;
+  font-size: 1em;
+  border-radius: 6px;
+  border: 1.5px solid #bbb;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+  flex: 1;
+  min-width: 220px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.add-controls input[type="text"]:focus,
+.add-controls select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* Botões */
+.add-controls button {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  white-space: nowrap;
+}
+
+.add-controls button:hover {
+  background-color: #1c5980;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+  body, .container {
+    font-size: 18px;
+  }
+
+  h1 {
+    font-size: 1.8em !important;
+  }
+
+  .sub-info, .sub-detail {
+    font-size: 1.1em !important;
+    text-align: center;
+  }
+
+  .section {
+    margin-bottom: 30px;
+  }
+
+  .section h2 {
+    font-size: 1.4em !important;
+    transition: all 0.3s ease;
+  }
+  
+  .exercise-list {
+    gap: 16px;
+  }
+
+  .exercise-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    font-size: 1.1em !important;
+    margin-bottom: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .exercise-label {
+    font-size: 1.15em !important;
+    transition: all 0.3s ease;
+  }
+
+  .exercise-details {
+    font-size: 1em !important;
+    width: 100% !important;
+    margin-top: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .weight-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 8px !important;
+    margin-top: 6px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+
+  .add-controls {
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 15px !important;
+  }
+
+  .add-controls input[type="text"],
+  .add-controls select,
+  .add-controls button {
+    width: 100% !important;
+    font-size: 1.1em !important;
+    padding: 12px !important;
+    min-width: unset !important;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+
+  .generate-button, .secondary-button {
+    width: 100% !important;
+    font-size: 1.25em !important;
+    padding: 16px 20px !important;
+    margin-bottom: 15px !important;
+    transition: all 0.3s ease;
+  }
+
+  #output-text {
+    font-size: 1.1em !important;
+    padding: 16px !important;
+  }
+}
+button[title="Adicionar GIF ao exercício"] {
+  transition: transform 0.2s;
+}
+button[title="Adicionar GIF ao exercício"]:hover {
+  transform: scale(1.2);
+}
+
+
+
+/* Botão principal - Gerar Resumo */
+.generate-button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  font-weight: 700;
+  padding: 14px 30px;
+  font-size: 1.15em;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
 }
 
 .generate-button:hover {
-  background-color: #218838;
+  background-color: #219150;
+  transform: translateY(-1px);
 }
 
-#output-text {
-  background-color: #e9ecef;
-  border: 1px solid #dee2e6;
-  padding: 20px;
-  margin-top: 30px;
+/* Botões secundários - Salvar e Importar */
+.secondary-button {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 12px 22px;
+  font-size: 1em;
   border-radius: 8px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-size: 1.1em;
-  display: none;
+  cursor: pointer;
+  margin-top: 16px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.secondary-button:hover {
+  background-color: #21618c;
 }
