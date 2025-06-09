@@ -1,354 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Ficha de Treino - Allp Fit</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2, h3 {
-            color: #007bff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 2.5em;
-        }
-        h2 {
-            font-size: 1.8em;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 30px;
-        }
-        h3 {
-            font-size: 1.4em;
-            color: #555;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .section {
-            margin-bottom: 30px;
-        }
-        .exercise-item {
-            display: flex;
-            align-items: center;
-            background-color: #e9f5ff;
-            border: 1px solid #cce0ff;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 5px;
-            transition: background-color 0.2s ease;
-        }
-        .exercise-item:hover {
-            background-color: #dbeaff;
-        }
-        .exercise-item input[type="checkbox"] {
-            margin-right: 15px;
-            min-width: 20px; /* Garante que o checkbox não seja muito pequeno */
-            min-height: 20px; /* Garante que o checkbox não seja muito pequeno */
-            accent-color: #007bff; /* Cor de destaque para o checkbox */
-        }
-        .exercise-label {
-            flex-grow: 1;
-            font-size: 1.1em;
-        }
-        .exercise-details {
-            font-size: 0.9em;
-            color: #666;
-            margin-left: auto; /* Alinha os detalhes à direita */
-            text-align: right;
-        }
-        .exercise-item.completed {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-        .exercise-item.completed .exercise-label {
-            text-decoration: line-through;
-            color: #555;
-        }
-        .button-container {
-            text-align: center;
-            margin-top: 40px;
-        }
-        .generate-button {
-            background-color: #28a745;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .generate-button:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-        }
-        #output-text {
-            background-color: #e9ecef;
-            border: 1px solid #dee2e6;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 8px;
-            white-space: pre-wrap; /* Mantém quebras de linha e espaços */
-            word-wrap: break-word; /* Quebra palavras longas */
-            font-size: 1.1em;
-            min-height: 100px;
-            display: none; /* Esconde até o botão ser clicado */
-        }
-        .info-box {
-            background-color: #fff3cd;
-            border-left: 5px solid #ffeeba;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 5px;
-            color: #856404;
-            font-size: 0.9em;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minha Ficha de Treino - Allp Fit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Minha Ficha de Treino - Allp Fit</h1>
-        <p style="text-align: center; font-size: 1.1em; color: #555;">**Fase de Adaptação - 4 Semanas**</p>
-        <p style="text-align: center; font-size: 0.9em; color: #777;">Objetivo: Recondicionamento Muscular, Fortalecimento Geral, Adaptação Articular</p>
-        <div class="info-box">
-            **Instruções:** Marque os exercícios que você realizou e clique em "Gerar Resumo do Treino" para criar um texto compartilhável.
-            Lembre-se: 3 séries de 12-15 repetições, carga moderada, 60-90 segundos de descanso.
-        </div>
+  <div class="container">
+    <h1>Minha Ficha de Treino - Allp Fit</h1>
+    <p class="sub-info">**Fase de Adaptação - 4 Semanas**</p>
+    <p class="sub-detail">Objetivo: Recondicionamento Muscular, Fortalecimento Geral, Adaptação Articular</p>
 
-        <div class="section" id="dia1">
-            <h2>DIA 1: PEITO E TRÍCEPS</h2>
-            <div class="exercise-list">
-                <div class="exercise-item">
-                    <input type="checkbox" id="d1e1">
-                    <label for="d1e1" class="exercise-label">Supino Máquina</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d1e2">
-                    <label for="d1e2" class="exercise-label">Crucifixo Máquina</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d1e3">
-                    <label for="d1e3" class="exercise-label">Desenvolvimento Máquina (Ombro)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d1e4">
-                    <label for="d1e4" class="exercise-label">Tríceps Pulley (barra reta ou V)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d1e5">
-                    <label for="d1e5" class="exercise-label">Tríceps Testa (barra W ou halter)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d1e6">
-                    <label for="d1e6" class="exercise-label">Prancha Abdominal</label>
-                    <span class="exercise-details">3 x Max</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" id="dia2">
-            <h2>DIA 2: COSTAS E BÍCEPS</h2>
-            <div class="exercise-list">
-                <div class="exercise-item">
-                    <input type="checkbox" id="d2e1">
-                    <label for="d2e1" class="exercise-label">Puxada Alta na Máquina (Pulley Frente)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d2e2">
-                    <label for="d2e2" class="exercise-label">Remada Máquina (Sentado)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d2e3">
-                    <label for="d2e3" class="exercise-label">Remada Baixa (Cavalinho ou V)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d2e4">
-                    <label for="d2e4" class="exercise-label">Rosca Direta com Barra ou Halteres</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d2e5">
-                    <label for="d2e5" class="exercise-label">Rosca Scott (Máquina ou Banco)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d2e6">
-                    <label for="d2e6" class="exercise-label">Abdominal Crunch na Máquina ou Solo</label>
-                    <span class="exercise-details">3 x 15-20</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" id="dia3">
-            <h2>DIA 3: PERNAS E PANTURRILHAS</h2>
-            <div class="exercise-list">
-                <div class="exercise-item">
-                    <input type="checkbox" id="d3e1">
-                    <label for="d3e1" class="exercise-label">Leg Press 45° ou Horizontal</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d3e2">
-                    <label for="d3e2" class="exercise-label">Cadeira Extensora</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d3e3">
-                    <label for="d3e3" class="exercise-label">Cadeira Flexora</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d3e4">
-                    <label for="d3e4" class="exercise-label">Cadeira Adutora</label>
-                    <span class="exercise-details">3 x 15-20</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d3e5">
-                    <label for="d3e5" class="exercise-label">Cadeira Abdutora</label>
-                    <span class="exercise-details">3 x 15-20</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d3e6">
-                    <label for="d3e6" class="exercise-label">Panturrilha em Pé na Máquina</label>
-                    <span class="exercise-details">3 x 15-20</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" id="dia4">
-            <h2>DIA 4: CORPO TOTAL</h2>
-            <div class="exercise-list">
-                <div class="exercise-item">
-                    <input type="checkbox" id="d4e1">
-                    <label for="d4e1" class="exercise-label">Remada Baixa (Cavalinho ou V)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d4e2">
-                    <label for="d4e2" class="exercise-label">Supino Máquina</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d4e3">
-                    <label for="d4e3" class="exercise-label">Leg Press 45° ou Horizontal</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d4e4">
-                    <label for="d4e4" class="exercise-label">Puxada Alta na Máquina (Pulley Frente)</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d4e5">
-                    <label for="d4e5" class="exercise-label">Cadeira Extensora</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d4e6">
-                    <label for="d4e6" class="exercise-label">Cadeira Flexora</label>
-                    <span class="exercise-details">3 x 12-15</span>
-                </div>
-                <div class="exercise-item">
-                    <input type="checkbox" id="d4e7">
-                    <label for="d4e7" class="exercise-label">Abdominal (à sua escolha)</label>
-                    <span class="exercise-details">3 x 15-20</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="button-container">
-            <button class="generate-button" onclick="gerarResumoTreino()">Gerar Resumo do Treino</button>
-        </div>
-
-        <pre id="output-text"></pre>
+    <div class="info-box">
+      **Instruções:** Marque os exercícios que você realizou, insira o peso utilizado e clique em "Gerar Resumo do Treino" para criar um texto compartilhável.
     </div>
 
-    <script>
-        // Função para obter a data atual formatada
-        function getFormattedDate() {
-            const today = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            // Define o local para formatar a data em português
-            return today.toLocaleDateString('pt-BR', options);
-        }
+    <!-- Exemplo: Treino Dia 1 -->
+    <div class="section" id="dia1">
+      <h2>DIA 1: PEITO E OMBRO</h2>
+      <div class="exercise-list">
+        <div class="exercise-item">
+          <input type="checkbox" id="d1e1" />
+          <label for="d1e1" class="exercise-label">
+            <img src="gifs/supino-reto.gif" class="exercise-gif" alt="Supino Máquina">
+            Supino Reto
+          </label>
+          <span class="exercise-details">15/12/10</span>
+          <input type="text" class="weight-input" placeholder="Peso (kg)" />
+        </div>
+        <div class="exercise-item">
+          <input type="checkbox" id="d1e2" />
+          <label for="d1e1" class="exercise-label">
+            <img src="gifs/supino-inclinado.gif" class="exercise-gif" alt="Supino Máquina">
+            Supino Inclinado
+          </label>
+          <span class="exercise-details">15/12/10</span>
+          <input type="text" class="weight-input" placeholder="Peso (kg)" />
+        </div>
+        <div class="exercise-item">
+          <input type="checkbox" id="d1e3" />
+          <label for="d1e1" class="exercise-label">
+            <img src="gifs/peck-deck.gif" class="exercise-gif" alt="Supino Máquina">
+            Peck deck 
+          </label>
+          <span class="exercise-details">3 x 12-15</span>
+          <input type="text" class="weight-input" placeholder="Peso (kg)" />
+        </div>
+        <div class="exercise-item">
+          <input type="checkbox" id="d1e4" />
+          <label for="d1e1" class="exercise-label">
+            <img src="gifs/desenvolvimento-arnold.gif" class="exercise-gif" alt="Supino Máquina">
+            Desenvolvimento p/ frente arnold
+          </label>
+          <span class="exercise-details">3 x 8</span>
+          <input type="text" class="weight-input" placeholder="Peso (kg)" />
+        </div>
+        <div class="exercise-item">
+          <input type="checkbox" id="d1e5" />
+          <label for="d1e1" class="exercise-label">
+            <img src="gifs/elevacao-lateral.gif" class="exercise-gif" alt="Supino Máquina">
+            Elevação lateral
+          </label>
+          <span class="exercise-details">3 x 8</span>
+          <input type="text" class="weight-input" placeholder="Peso (kg)" />
+        </div>
+        <div class="exercise-item">
+          <input type="checkbox" id="d1e6" />
+          <label for="d1e1" class="exercise-label">
+            <img src="gifs/elevacao-frontal.gif" class="exercise-gif" alt="Supino Máquina">
+            Elevação frontal
+          </label>
+          <span class="exercise-details">3 x 8</span>
+          <input type="text" class="weight-input" placeholder="Peso (kg)" />
+        </div>
+        <!-- Adicione outros exercícios aqui -->
+      </div>
+    </div>
 
-        function gerarResumoTreino() {
-            const outputTextElement = document.getElementById('output-text');
-            let resumo = `📊 Resumo do Treino de Hoje - Allp Fit 🏋️‍♂️\n`;
-            resumo += `Data: ${getFormattedDate()}\n\n`;
-            resumo += `✅ Exercícios Realizados:\n`;
+    <button class="generate-button" onclick="gerarResumoTreino()">Gerar Resumo do Treino</button>
+    <pre id="output-text"></pre>
+  </div>
 
-            const checkedExercises = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkedExercises.length === 0) {
-                resumo = `Ops! Parece que você não marcou nenhum exercício. 🤷‍♂️\nMarque os exercícios que você fez e tente novamente!`;
-                outputTextElement.style.display = 'block';
-                outputTextElement.textContent = resumo;
-                return;
-            }
+  <script>
+  function getFormattedDate() {
+      const today = new Date();
+      return today.toLocaleDateString('pt-BR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+      });
+  }
 
-            checkedExercises.forEach(checkbox => {
-                const label = checkbox.nextElementSibling.textContent; // Pega o texto da label associada
-                const details = checkbox.parentNode.querySelector('.exercise-details').textContent; // Pega os detalhes de série/repetição
-                const parentSection = checkbox.closest('.section');
-                const dayTitle = parentSection ? parentSection.querySelector('h2').textContent : '';
+  function gerarResumoTreino() {
+      const outputTextElement = document.getElementById('output-text');
+      let resumo = `📊 Resumo do Treino de Hoje - Allp Fit 🏋️‍♂️\n`;
+      resumo += `Data: ${getFormattedDate()}\n\n✅ Exercícios Realizados:\n`;
 
-                // Verifica se o título do dia já foi adicionado ao resumo
-                if (!resumo.includes(`\n   • ${dayTitle}\n`)) {
-                     resumo += `\n   • ${dayTitle}\n`;
-                }
-                resumo += `     - ${label} (${details})\n`;
-            });
+      const checkedExercises = document.querySelectorAll('.exercise-item input[type="checkbox"]:checked');
+      if (checkedExercises.length === 0) {
+      outputTextElement.textContent = "Ops! Nenhum exercício marcado.";
+      outputTextElement.style.display = 'block';
+      return;
+      }
 
-            resumo += `\n💪 Treino concluído com sucesso! #VoltaAoTreino #AllpFit #FocoNoTreino`;
+      checkedExercises.forEach(checkbox => {
+      const item = checkbox.closest('.exercise-item');
+      const labelText = item.querySelector('.exercise-label')?.innerText.trim();
+      const details = item.querySelector('.exercise-details')?.textContent.trim();
+      const weightInput = item.querySelector('.weight-input');
+      const peso = weightInput?.value.trim() || 'Peso não informado';
+      const sectionTitle = item.closest('.section')?.querySelector('h2')?.textContent;
 
-            outputTextElement.textContent = resumo;
-            outputTextElement.style.display = 'block';
+      if (!resumo.includes(`\n   • ${sectionTitle}\n`)) {
+          resumo += `\n   • ${sectionTitle}\n`;
+      }
 
-            // Adiciona ou remove a classe 'completed' para estilos visuais
-            document.querySelectorAll('.exercise-item input[type="checkbox"]').forEach(checkbox => {
-                if (checkbox.checked) {
-                    checkbox.closest('.exercise-item').classList.add('completed');
-                } else {
-                    checkbox.closest('.exercise-item').classList.remove('completed');
-                }
-            });
+      resumo += `     - ${labelText} (${details}) | Peso: ${peso}\n`;
 
-            // NOVO: Tenta compartilhar usando a Web Share API
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Resumo do Treino - Allp Fit',
-                    text: resumo
-                }).catch(() => {
-                    // Se o usuário cancelar ou erro, não faz nada extra
-                });
-            }
-        }
-    </script>
+      item.classList.add('completed');
+      });
+
+      resumo += `\n💪 Treino concluído com sucesso! #VoltaAoTreino #AllpFit #FocoNoTreino`;
+
+      outputTextElement.textContent = resumo;
+      outputTextElement.style.display = 'block';
+
+      if (navigator.share) {
+      navigator.share({
+          title: 'Resumo do Treino - Allp Fit',
+          text: resumo
+      }).catch(() => {});
+      }
+  }
+
+  // Salva automaticamente os pesos no localStorage ao digitar
+  document.addEventListener('input', function (e) {
+      if (e.target.classList.contains('weight-input')) {
+      const exerciseId = e.target.closest('.exercise-item').querySelector('input[type="checkbox"]').id;
+      localStorage.setItem(`peso-${exerciseId}`, e.target.value);
+      }
+  });
+
+  // Restaura os pesos salvos do localStorage ao carregar a página
+  window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.exercise-item').forEach(item => {
+      const checkbox = item.querySelector('input[type="checkbox"]');
+      const inputPeso = item.querySelector('.weight-input');
+      const pesoSalvo = localStorage.getItem(`peso-${checkbox.id}`);
+      if (pesoSalvo) {
+          inputPeso.value = pesoSalvo;
+      }
+      });
+  });
+  </script>
+
 </body>
 </html>
