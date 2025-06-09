@@ -18,7 +18,7 @@
 
     <div class="add-controls">
       <div class="row">
-        <input type="text" id="input-nome-grupo" placeholder="Nome do Grupo (ex: Dia 2: Costas e Bíceps)" />
+        <input type="text" id="input-nome-grupo" placeholder="Nome do Grupo (ex: Costas e Bíceps)" />
         <button onclick="adicionarGrupo()">Adicionar Grupo</button>
       </div>
 
@@ -31,6 +31,15 @@
         <button onclick="adicionarExercicio()">Adicionar Exercício</button>
       </div>
     </div>
+
+    <!-- Modal para visualizar GIF grande -->
+<div id="gif-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
+  <div style="position:relative; max-width:90vw; max-height:90vh;">
+    <button id="btnFecharModal" style="position:absolute; top:10px; right:10px; background:#fff; border:none; font-size:24px; cursor:pointer;">×</button>
+    <img id="gif-modal-img" src="" alt="GIF ampliado" style="max-width:100%; max-height:100%; border-radius:8px;" />
+  </div>
+</div>
+
 
 
     <div style="margin-top: 20px;">
@@ -48,6 +57,20 @@
 
 
   <script>
+    const modal = document.getElementById('gif-modal');
+const modalImg = document.getElementById('gif-modal-img');
+const btnFecharModal = document.getElementById('btnFecharModal');
+
+function abrirModalGif(src) {
+  modalImg.src = src;
+  modal.style.display = 'flex';
+}
+
+btnFecharModal.onclick = () => {
+  modal.style.display = 'none';
+  modalImg.src = '';
+};
+
     let gifBase64Temp = ''; // variável global temporária para armazenar o base64 do gif
 
     document.getElementById('input-gif-file').addEventListener('change', function (event) {
@@ -180,6 +203,8 @@
             img.style.objectFit = 'contain';
             img.style.marginLeft = '10px';
             img.style.borderRadius = '6px';
+            img.onclick = () => abrirModalGif(ex.gifBase64);
+
             leftDiv.appendChild(img);
           }
           leftDiv.appendChild(label);
