@@ -1,4 +1,5 @@
-/* Grupos de treino (seções) */
+/* === ESTILOS ORIGINAIS + AJUSTES MOBILE E POSICIONAMENTO CORRETO DO BOTÃO X === */
+
 .section {
   background: #ffffff;
   padding: 20px 24px;
@@ -10,7 +11,6 @@
   transition: background-color 0.3s ease;
 }
 
-/* Título do grupo */
 .section h2 {
   font-weight: 700;
   font-size: 1.4em;
@@ -27,14 +27,12 @@
   border-bottom: 2px solid #3498db;
 }
 
-/* Exercício container */
 .exercise-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* Cada exercício */
 .exercise-item {
   background: #f9f9f9;
   padding: 12px 16px;
@@ -46,15 +44,14 @@
   align-items: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.04);
   transition: background 0.3s ease;
+  position: relative;
 }
 
-/* Checkbox do exercício */
 .exercise-item input[type="checkbox"] {
   transform: scale(1.2);
   cursor: pointer;
 }
 
-/* Nome do exercício */
 .exercise-label {
   flex: 1;
   font-weight: 600;
@@ -63,7 +60,6 @@
   user-select: none;
 }
 
-/* Repetições */
 .exercise-details {
   font-size: 0.9em;
   color: #7f8c8d;
@@ -71,38 +67,42 @@
   user-select: none;
 }
 
-/* Input peso */
-.weight-input {
+.weight-input,
+.carga-input {
   width: 80px;
   font-size: 0.9em;
   padding: 6px 10px;
   border-radius: 6px;
   border: 1.5px solid #ccc;
   transition: border-color 0.3s ease;
+  margin-left: auto;
 }
 
-.weight-input:focus {
+.weight-input:focus,
+.carga-input:focus {
   outline: none;
   border-color: #3498db;
 }
 
-/* Botão X para remover (grupo ou exercício) */
-.remove-button {
+.exercise-item button {
+  margin-left: 8px;
+  font-size: 22px;
+  padding: 2px 8px;
   background: transparent;
   border: none;
   color: #e74c3c;
-  font-size: 1.2em;
   font-weight: bold;
   cursor: pointer;
-  padding: 4px;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
+  position: static;
+  line-height: 1;
 }
 
-.remove-button:hover {
+.exercise-item button:hover {
   color: #c0392b;
+  transform: scale(1.2);
 }
 
-/* Controles para adicionar grupos e exercícios */
 .add-controls {
   background: #f5f9fc;
   border: 1px solid #b0c4de;
@@ -114,7 +114,6 @@
   gap: 16px;
 }
 
-/* Estilo das linhas de grupo e exercício */
 .add-controls .row {
   display: flex;
   flex-wrap: wrap;
@@ -123,7 +122,6 @@
   justify-content: flex-start;
 }
 
-/* Estilo dos inputs e selects */
 .add-controls input[type="text"],
 .add-controls select {
   padding: 10px 14px;
@@ -143,7 +141,6 @@
   border-color: #3498db;
 }
 
-/* Botões */
 .add-controls button {
   background-color: #2980b9;
   color: white;
@@ -160,7 +157,50 @@
   background-color: #1c5980;
 }
 
-/* Responsividade */
+.generate-button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  font-weight: 700;
+  padding: 14px 30px;
+  font-size: 1.15em;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
+}
+
+.generate-button:hover {
+  background-color: #219150;
+  transform: translateY(-1px);
+}
+
+.secondary-button {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 12px 22px;
+  font-size: 1em;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 16px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.secondary-button:hover {
+  background-color: #21618c;
+}
+
+button[title="Adicionar GIF ao exercício"] {
+  transition: transform 0.2s;
+}
+button[title="Adicionar GIF ao exercício"]:hover {
+  transform: scale(1.2);
+}
+
 @media screen and (max-width: 768px) {
   body, .container {
     font-size: 18px;
@@ -181,9 +221,8 @@
 
   .section h2 {
     font-size: 1.4em !important;
-    transition: all 0.3s ease;
   }
-  
+
   .exercise-list {
     gap: 16px;
   }
@@ -195,34 +234,40 @@
     padding: 12px !important;
     font-size: 1.1em !important;
     margin-bottom: 14px;
-    transition: all 0.3s ease;
   }
 
   .exercise-label {
     font-size: 1.15em !important;
-    transition: all 0.3s ease;
   }
 
   .exercise-details {
     font-size: 1em !important;
     width: 100% !important;
     margin-top: 6px;
-    transition: all 0.3s ease;
   }
 
-  .weight-input {
+  .carga-input {
     width: 100% !important;
     max-width: 100% !important;
-    padding: 8px !important;
     margin-top: 6px;
     box-sizing: border-box;
-    transition: all 0.3s ease;
+  }
+
+  .exercise-item img {
+    width: 100%;
+    height: auto;
+    max-width: 150px;
   }
 
   .add-controls {
     flex-direction: column !important;
     gap: 16px !important;
     padding: 15px !important;
+  }
+
+  .add-controls .row {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .add-controls input[type="text"],
@@ -233,7 +278,6 @@
     padding: 12px !important;
     min-width: unset !important;
     box-sizing: border-box;
-    transition: all 0.3s ease;
   }
 
   .generate-button, .secondary-button {
@@ -241,58 +285,10 @@
     font-size: 1.25em !important;
     padding: 16px 20px !important;
     margin-bottom: 15px !important;
-    transition: all 0.3s ease;
   }
 
   #output-text {
     font-size: 1.1em !important;
     padding: 16px !important;
   }
-}
-button[title="Adicionar GIF ao exercício"] {
-  transition: transform 0.2s;
-}
-button[title="Adicionar GIF ao exercício"]:hover {
-  transform: scale(1.2);
-}
-
-
-
-/* Botão principal - Gerar Resumo */
-.generate-button {
-  background-color: #27ae60;
-  color: white;
-  border: none;
-  font-weight: 700;
-  padding: 14px 30px;
-  font-size: 1.15em;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
-}
-
-.generate-button:hover {
-  background-color: #219150;
-  transform: translateY(-1px);
-}
-
-/* Botões secundários - Salvar e Importar */
-.secondary-button {
-  background-color: #2980b9;
-  color: white;
-  border: none;
-  font-weight: 600;
-  padding: 12px 22px;
-  font-size: 1em;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 16px;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.secondary-button:hover {
-  background-color: #21618c;
 }
