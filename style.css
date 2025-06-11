@@ -1,4 +1,5 @@
-/* === ESTILOS ORIGINAIS + AJUSTES MOBILE E POSICIONAMENTO CORRETO DO BOTÃO X === */
+
+/* === STYLE COMPLETO COM LAYOUT AJUSTADO === */
 
 .section {
   background: #ffffff;
@@ -35,67 +36,81 @@
 
 .exercise-item {
   background: #f9f9f9;
-  padding: 12px 16px;
+  padding: 12px 16px 16px;
   border-radius: 8px;
   border: 1px solid #dcdcdc;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.04);
   transition: background 0.3s ease;
   position: relative;
 }
 
-.exercise-item input[type="checkbox"] {
+.exercise-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exercise-left input[type="checkbox"] {
   transform: scale(1.2);
   cursor: pointer;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.exercise-left img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 6px;
 }
 
 .exercise-label {
-  flex: 1;
-  font-weight: 600;
+  margin: 0;
+  font-weight: 700;
   font-size: 1em;
   color: #34495e;
   user-select: none;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .exercise-details {
   font-size: 0.9em;
   color: #7f8c8d;
-  min-width: 90px;
+  white-space: nowrap;
+  margin-left: auto;
   user-select: none;
 }
 
-.weight-input,
 .carga-input {
-  width: 80px;
+  width: 100%;
   font-size: 0.9em;
   padding: 6px 10px;
   border-radius: 6px;
   border: 1.5px solid #ccc;
   transition: border-color 0.3s ease;
-  margin-left: auto;
+  box-sizing: border-box;
 }
 
-.weight-input:focus,
 .carga-input:focus {
   outline: none;
   border-color: #3498db;
 }
 
 .exercise-item button {
-  margin-left: 8px;
-  font-size: 22px;
-  padding: 2px 8px;
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 20px;
   background: transparent;
   border: none;
   color: #e74c3c;
   font-weight: bold;
   cursor: pointer;
   transition: color 0.2s ease, transform 0.2s ease;
-  position: static;
-  line-height: 1;
 }
 
 .exercise-item button:hover {
@@ -194,75 +209,28 @@
   background-color: #21618c;
 }
 
-button[title="Adicionar GIF ao exercício"] {
-  transition: transform 0.2s;
-}
-button[title="Adicionar GIF ao exercício"]:hover {
-  transform: scale(1.2);
-}
-
 @media screen and (max-width: 768px) {
-  body, .container {
-    font-size: 18px;
-  }
-
-  h1 {
-    font-size: 1.8em !important;
-  }
-
-  .sub-info, .sub-detail {
-    font-size: 1.1em !important;
-    text-align: center;
-  }
-
-  .section {
-    margin-bottom: 30px;
-  }
-
-  .section h2 {
-    font-size: 1.4em !important;
-  }
-
-  .exercise-list {
-    gap: 16px;
-  }
-
   .exercise-item {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 10px !important;
-    padding: 12px !important;
-    font-size: 1.1em !important;
-    margin-bottom: 14px;
+    padding: 12px;
   }
 
-  .exercise-label {
-    font-size: 1.15em !important;
+  .exercise-left {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .exercise-details {
-    font-size: 1em !important;
-    width: 100% !important;
-    margin-top: 6px;
+  .exercise-left img {
+    max-width: 100px;
   }
 
   .carga-input {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100%;
     margin-top: 6px;
     box-sizing: border-box;
   }
 
-  .exercise-item img {
-    width: 100%;
-    height: auto;
-    max-width: 150px;
-  }
-
   .add-controls {
-    flex-direction: column !important;
-    gap: 16px !important;
-    padding: 15px !important;
+    padding: 15px;
   }
 
   .add-controls .row {
@@ -272,23 +240,12 @@ button[title="Adicionar GIF ao exercício"]:hover {
 
   .add-controls input[type="text"],
   .add-controls select,
-  .add-controls button {
-    width: 100% !important;
-    font-size: 1.1em !important;
-    padding: 12px !important;
-    min-width: unset !important;
+  .add-controls button,
+  .generate-button,
+  .secondary-button {
+    width: 100%;
+    font-size: 1.1em;
+    padding: 12px;
     box-sizing: border-box;
-  }
-
-  .generate-button, .secondary-button {
-    width: 100% !important;
-    font-size: 1.25em !important;
-    padding: 16px 20px !important;
-    margin-bottom: 15px !important;
-  }
-
-  #output-text {
-    font-size: 1.1em !important;
-    padding: 16px !important;
   }
 }
