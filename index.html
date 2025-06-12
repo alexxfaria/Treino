@@ -208,9 +208,6 @@
           leftDiv.appendChild(label);
 
 
-
-          leftDiv.appendChild(detalhes);
-
           const cargaInput = document.createElement('input');
           cargaInput.type = 'number';
           cargaInput.min = 0;
@@ -239,6 +236,7 @@
 
           item.appendChild(leftDiv);
           item.appendChild(cargaInput);
+          item.appendChild(detalhes);
           item.appendChild(botaoApagarExercicio);
           lista.appendChild(item);
         });
