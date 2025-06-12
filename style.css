@@ -81,7 +81,9 @@
   font-size: 0.9em;
   color: #7f8c8d;
   white-space: nowrap;
-  margin-left: auto;
+  margin-left: 10px;
+
+  margin-right: auto;
   user-select: none;
 }
 

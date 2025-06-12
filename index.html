@@ -33,14 +33,14 @@
     </div>
 
     <!-- Modal para visualizar GIF grande -->
-<div id="gif-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
-  <div style="position:relative; max-width:90vw; max-height:90vh;">
-    <button id="btnFecharModal" style="position:absolute; top:10px; right:10px; background:#fff; border:none; font-size:24px; cursor:pointer;">×</button>
-    <img id="gif-modal-img" src="" alt="GIF ampliado" style="max-width:100%; max-height:100%; border-radius:8px;" />
-  </div>
-</div>
-
-
+    <div id="gif-modal"
+      style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
+      <div style="position:relative; max-width:90vw; max-height:90vh;">
+        <button id="btnFecharModal"
+          style="position:absolute; top:10px; right:10px; background:#fff; border:none; font-size:24px; cursor:pointer;">×</button>
+        <img id="gif-modal-img" src="" alt="GIF ampliado" style="max-width:100%; max-height:100%; border-radius:8px;" />
+      </div>
+    </div>
 
     <div style="margin-top: 20px;">
       <button class="generate-button" onclick="gerarResumoTreino()">Gerar Resumo do Treino</button>
@@ -50,26 +50,23 @@
         arquivo</button>
     </div>
 
-
     <pre id="output-text"></pre>
   </div>
 
-
-
   <script>
     const modal = document.getElementById('gif-modal');
-const modalImg = document.getElementById('gif-modal-img');
-const btnFecharModal = document.getElementById('btnFecharModal');
+    const modalImg = document.getElementById('gif-modal-img');
+    const btnFecharModal = document.getElementById('btnFecharModal');
 
-function abrirModalGif(src) {
-  modalImg.src = src;
-  modal.style.display = 'flex';
-}
+    function abrirModalGif(src) {
+      modalImg.src = src;
+      modal.style.display = 'flex';
+    }
 
-btnFecharModal.onclick = () => {
-  modal.style.display = 'none';
-  modalImg.src = '';
-};
+    btnFecharModal.onclick = () => {
+      modal.style.display = 'none';
+      modalImg.src = '';
+    };
 
     let gifBase64Temp = ''; // variável global temporária para armazenar o base64 do gif
 
@@ -164,12 +161,12 @@ btnFecharModal.onclick = () => {
           const item = document.createElement('div');
           item.className = 'exercise-item';
           item.style.display = 'flex';
-          item.style.alignItems = 'center';
+          item.style.alignItems = 'flex-start';
           item.style.justifyContent = 'space-between';
 
           const leftDiv = document.createElement('div');
           leftDiv.style.display = 'flex';
-          leftDiv.style.alignItems = 'center';
+          leftDiv.style.alignItems = 'flex-start';
           leftDiv.style.flexGrow = '1';
 
           const checkbox = document.createElement('input');
@@ -190,6 +187,7 @@ btnFecharModal.onclick = () => {
           const detalhes = document.createElement('span');
           detalhes.className = 'exercise-details';
           detalhes.innerText = ex.repeticoes;
+          detalhes.style.marginRight = 'auto';
           detalhes.style.marginLeft = '10px';
 
           leftDiv.appendChild(checkbox);
@@ -209,7 +207,7 @@ btnFecharModal.onclick = () => {
           }
           leftDiv.appendChild(label);
 
-          
+
 
           leftDiv.appendChild(detalhes);
 
