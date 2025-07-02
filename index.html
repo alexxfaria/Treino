@@ -406,56 +406,55 @@
       const fileInput = document.getElementById("arquivoInput");
       const file = fileInput.files[0];
       if (!file) return;
-    
+
       const reader = new FileReader();
       reader.onload = function (e) {
         try {
           const conteudoJson = JSON.parse(e.target.result);
-    
+
           // Verifica se o conteúdo é um array com grupos
           if (!Array.isArray(conteudoJson)) {
             alert("Arquivo de treino inválido.");
             return;
           }
-    
+
           const porGrupo = confirm("Deseja importar apenas um grupo do treino?");
           if (porGrupo) {
             const nomesGrupos = conteudoJson.map((g, idx) => `${idx + 1}. ${g.nome}`).join('\n');
             const selecao = prompt(`Selecione o número do grupo para importar:\n\n${nomesGrupos}`);
-    
+
             const indice = parseInt(selecao, 10) - 1;
             if (isNaN(indice) || indice < 0 || indice >= conteudoJson.length) {
               alert("Seleção inválida.");
               return;
             }
-    
+
             const grupoSelecionado = conteudoJson[indice];
-            grupoSelecionado.id = generateId(); // Gera novo ID para evitar conflitos
-            grupoSelecionado.exercicios.forEach(ex => ex.id = generateId());
-    
+            grupoSelecionado.id = generateId(); // Novo ID para o grupo
+            grupoSelecionado.exercicios.forEach(ex => ex.id = generateId()); // Novos IDs para exercícios
+
+            treino = []; // 🔴 Limpa todos os grupos existentes
             treino.push(grupoSelecionado);
             renderizarTreino();
             salvarTreinoLocal();
             alert(`Grupo "${grupoSelecionado.nome}" importado com sucesso!`);
           } else {
-            // Importar tudo
             if (!confirm("Tem certeza que deseja substituir todo o treino atual pelo novo?")) return;
-    
+
             treino = conteudoJson;
             renderizarTreino();
             salvarTreinoLocal();
             alert("Treino completo importado com sucesso!");
           }
-    
+
         } catch {
           alert("Erro ao ler o arquivo. Verifique se é um JSON válido.");
         }
+        fileInput.value = '';
       };
-    
+
       reader.readAsText(file);
     }
-
-
     // Inicializa a interface ao carregar a página
     window.onload = () => {
       renderizarTreino();
